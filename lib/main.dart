@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:number_trivia_api/data_source/models/number_trivia_model.dart';
+import 'package:number_trivia_api/data_source/remote_ds/remote_ds.dart';
 import 'package:number_trivia_api/presentaion/bloc/number_trivia_bloc.dart';
 import 'package:number_trivia_api/presentaion/number_trivia/number_trivia.dart';
 
 void main() {
-  runApp( BlocProvider(
-  create: (context) => NumberTriviaBloc(),
-  child: MyApp(),
-));
+  runApp(BlocProvider(
+    create: (context) => NumberTriviaBloc(triviaRemoteDs: TriviaRemoteDsImpl()),
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {

@@ -43,7 +43,7 @@ class _NumberTriviaState extends State<NumberTrivia> {
                       labelText: 'Enter A Number',
                       labelStyle: const TextStyle(color: Colors.grey),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
+                        borderRadius: BorderRadius.circular(8),
                       ),
                     ),
                     validator: (value) {
@@ -60,22 +60,15 @@ class _NumberTriviaState extends State<NumberTrivia> {
                     children: [
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: () {
-                            context.read<NumberTriviaBloc>().add(
-                                GetNumberTrivia(number: int.parse(numC.text)));
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const NumberTriviaResult()));
-                          },
-                          child: const Text('Search'),
+                          onPressed: () =>
+                              onSearchButtonPressed(context, numC.text),
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(
                                   8), // Adjust the border radius as needed
                             ),
                           ),
+                          child: const Text('Search'),
                         ),
                       ),
                       const SizedBox(
@@ -83,23 +76,14 @@ class _NumberTriviaState extends State<NumberTrivia> {
                       ),
                       Expanded(
                           child: ElevatedButton(
-                        onPressed: () {
-                          context
-                              .read<NumberTriviaBloc>()
-                              .add(GetRandomNumberTrivia());
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const NumberTriviaResult()));
-                        },
-                        child: const Text('Random'),
+                        onPressed: () => onRandomButtonPressed(context),
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
                                 8), // Adjust the border radius as needed
                           ),
                         ),
+                        child: const Text('Random'),
                       )),
                     ],
                   )
@@ -109,4 +93,18 @@ class _NumberTriviaState extends State<NumberTrivia> {
           ),
         ));
   }
+}
+
+void onSearchButtonPressed(BuildContext context, String numC) {
+  context
+      .read<NumberTriviaBloc>()
+      .add(GetNumberTrivia(number: int.parse(numC)));
+  Navigator.push(context,
+      MaterialPageRoute(builder: (context) => const NumberTriviaResult()));
+}
+
+void onRandomButtonPressed(BuildContext context) {
+  context.read<NumberTriviaBloc>().add(GetRandomNumberTrivia());
+  Navigator.push(context,
+      MaterialPageRoute(builder: (context) => const NumberTriviaResult()));
 }
